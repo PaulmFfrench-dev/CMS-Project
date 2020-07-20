@@ -1,6 +1,13 @@
-<?php
-require_once("Include/DB.php");
-
+<?php require_once("Include/DB.php"); ?>
+<?php require_once("Include/Functions.php"); ?>
+<?php 
+if(isset($_POST["Submit"])){
+    $Category = $_POST["CategoryTitle"];
+    if(empty($Category)){
+        Error= "All fields must be filled out";
+        Redirect_to("Categories.php")
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +89,7 @@ require_once("Include/DB.php");
                     <div class="card-body bg-dark">
                         <div class="form-group">
                             <label for="title"><span class="FieldInfo">Category Title:</span></label>
-                            <input class="form-control" type="text" name="Title" id="title" placeholder="Type Title Here"value="">
+                            <input class="form-control" type="text" name="CategoryTitle" id="title" placeholder="Type Title Here"value="">
                         </div>
                         <div class="row" >
                             <div class="col-lg-6 mb-2">
