@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Posts</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/772f078b99.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="CSS/style.css">
@@ -59,6 +59,26 @@
         <div class="row">
             <div class="col-md-12">
                 <h1><i class="fas fa-blog" style="color:#27aae1;"></i> Blog Posts</h1>
+            </div>
+            <div class="col-lg-3 mb-2">
+                <a href="AddNewPost.php" class="btn btn-primary btn-block">
+                    <i class="fas fa-edit"></i>Add New Post
+                </a>
+            </div>
+            <div class="col-lg-3 mb-2">
+                <a href="Categories.php" class="btn btn-info btn-block">
+                    <i class="fas fa-folder-plus"></i>Add New Category
+                </a>
+            </div>
+            <div class="col-lg-3 mb-2">
+                <a href="Admins.php" class="btn btn-warning btn-block">
+                    <i class="fas fa-user-plus"></i>Add New Admin
+                </a>
+            </div>
+            <div class="col-lg-3 mb-2">
+                <a href="Comments.php" class="btn btn-success btn-block">
+                    <i class="fas fa-check"></i>Approve Comments
+                </a>
             </div>
         </div>
     </div>
