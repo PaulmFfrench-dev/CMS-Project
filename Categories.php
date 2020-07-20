@@ -4,12 +4,21 @@
 <?php 
 if(isset($_POST["Submit"])){
     $Category = $_POST["CategoryTitle"];
+    $Admin = "Paul";
 
     if(empty($Category)){
         $_SESSION["ErrorMessage"]= "All fields must be filled out";
         Redirect_to("Categories.php");
+    }elseif(strlen($Category)<3){
+        $_SESSION["ErrorMessage"]= "Category title should be greater than 2 characters";
+        Redirect_to("Categories.php");
+    }elseif(strlen($Category)>49){
+        $_SESSION["ErrorMessage"]= "Category title should be less than 50 characters";
+        Redirect_to("Categories.php");
+    }else{
+        //Query to Insert category in DB when all validation passes
     }
-}
+}//Ending of Submit Button If-Condition
 ?>
 
 <!DOCTYPE html>
