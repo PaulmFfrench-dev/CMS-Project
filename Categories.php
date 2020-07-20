@@ -67,7 +67,23 @@
 
 <!-- MAIN AREA -->
 <section class="container py-2 mb-4">
-
+    <div class="row" style="min-height:50px; background:red;">
+        <div class="offset-lg-1 col-lg-10" style="min-height:50px; background:yellow;">
+            <form class="" action="Categories.php" method="post">
+                <div class="card">
+                    <div class="card-header">
+                        <h1>Add New Category</h1>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="title"> Category Title: </label>
+                            <input class="form-control" type="text" name="Title" id="title" placeholder="Type Title Here"value="">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </section>
 <!-- MAIN AREA END -->
 
