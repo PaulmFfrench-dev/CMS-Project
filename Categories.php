@@ -1,11 +1,13 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
+<?php require_once("Include/Sessions.php"); ?>
 <?php 
 if(isset($_POST["Submit"])){
     $Category = $_POST["CategoryTitle"];
+
     if(empty($Category)){
-        Error= "All fields must be filled out";
-        Redirect_to("Categories.php")
+        $_SESSION["ErrorMessage"]= "All fields must be filled out";
+        Redirect_to("Categories.php");
     }
 }
 ?>
@@ -80,7 +82,11 @@ if(isset($_POST["Submit"])){
 <!-- MAIN AREA -->
 <section class="container py-2 mb-4">
     <div class="row" >
-        <div class="offset-lg-1 col-lg-10">
+        <div class="offset-lg-1 col-lg-10" style="min-height:400px;">
+            <?php 
+            echo ErrorMessage();
+            echo SuccessMessage();
+            ?>
             <form class="" action="Categories.php" method="post">
                 <div class="card bg-secondary text-light mb-3">
                     <div class="card-header">
@@ -96,7 +102,7 @@ if(isset($_POST["Submit"])){
                                 <a href="Dashboard.php" class="btn btn-warning btn-block"><i class="fas fa-arrow-left"></i> Back to Dashboard</a>
                             </div>
                             <div class="col-lg-6 mb-2">
-                                <button type="button" name="Submit" class="btn btn-success btn-block">
+                                <button type="submit" name="Submit" class="btn btn-success btn-block">
                                 <i class="fas fa-check"></i> Publish
                                 </button>
                             </div>
