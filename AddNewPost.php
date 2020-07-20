@@ -35,7 +35,8 @@ if(isset($_POST["Submit"])){
         $stmt->bindValue(':imageName',$Image);
         $stmt->bindValue(':postDescription',$PostText);
         $Execute=$stmt->execute();
-        
+        move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+
         if($Execute){
             $_SESSION["SuccessMessage"]="Post with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
             Redirect_to("AddNewPost.php");
