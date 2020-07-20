@@ -3,38 +3,45 @@
 <?php require_once("Include/Sessions.php"); ?>
 <?php 
 if(isset($_POST["Submit"])){
-    $Category = $_POST["CategoryTitle"];
+    $PostTitle = $_POST["PostTitle"];
+    $Category = $_POST["Category"];
+    $Image = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
+    $Target ="Uploads/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
+    $PostText = $_POST["PostDescription"];
     $Admin = "Paul";
     date_default_timezone_set("Europe/Dublin");
     $CurrentTime=time();
     $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
 
-    if(empty($Category)){
-        $_SESSION["ErrorMessage"]= "All fields must be filled out";
-        Redirect_to("Categories.php");
-    }elseif(strlen($Category)<3){
-        $_SESSION["ErrorMessage"]= "Category title should be greater than 2 characters";
-        Redirect_to("Categories.php");
-    }elseif(strlen($Category)>49){
-        $_SESSION["ErrorMessage"]= "Category title should be less than 50 characters";
-        Redirect_to("Categories.php");
+    if(empty($PostTitle)){
+        $_SESSION["ErrorMessage"]= "Title is required";
+        Redirect_to("AddNewPost.php");
+    }elseif(strlen($PostTitle)<5){
+        $_SESSION["ErrorMessage"]= "Post title should be greater than 5 characters";
+        Redirect_to("AddNewPost.php");
+    }elseif(strlen($PostText)>999){
+        $_SESSION["ErrorMessage"]= "Post Description should be less than 1000 characters";
+        Redirect_to("AddNewPost.php");
     }else{
-        //Query to Insert category in DB when all validation passes
+        //Query to Insert Post in DB when all validation passes
         $ConnectingDB;
-        $sql = "INSERT INTO category(title,author,datetime)";
-        $sql .= "VALUES(:categoryName,:adminName,:dateTime)";
+        $sql = "INSERT INTO post(datetime,title,category,author,image,post)";
+        $sql .= "VALUES(:dateTime,:postTitle,:categoryName,:adminName,:imageName,:postDescription)";
         $stmt = $ConnectingDB->prepare($sql);
+        $stmt->bindValue(':dateTime',$DateTime);
+        $stmt->bindValue(':postTitle',$PostTitle);
         $stmt->bindValue(':categoryName',$Category);
         $stmt->bindValue(':adminName',$Admin);
-        $stmt->bindValue(':dateTime',$DateTime);
+        $stmt->bindValue(':imageName',$Image);
+        $stmt->bindValue(':postDescription',$PostText);
         $Execute=$stmt->execute();
         
         if($Execute){
-            $_SESSION["SuccessMessage"]="Catergory with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
-            Redirect_to("Categories.php");
+            $_SESSION["SuccessMessage"]="Post with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
+            Redirect_to("AddNewPost.php");
         }else{
             $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
-            Redirect_to("Categories.php");
+            Redirect_to("AddNewPost.php");
         }
 
     }
@@ -116,7 +123,7 @@ if(isset($_POST["Submit"])){
             echo ErrorMessage();
             echo SuccessMessage();
             ?>
-            <form class="" action="Categories.php" method="post">
+            <form class="" action="AddNewPost.php" method="post" enctype="multipart/form-data">
                 <div class="card bg-secondary text-light mb-3">
                     <div class="card-body bg-dark">
                         <div class="form-group">
