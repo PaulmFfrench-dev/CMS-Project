@@ -1,3 +1,7 @@
+<?php require_once("Include/DB.php"); ?>
+<?php require_once("Include/Functions.php"); ?>
+<?php require_once("Include/Sessions.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,7 +88,58 @@
     </div>
 </header>
 <!-- HEADER END-->
-<br>
+<!-- MAIN AREA -->
+<section class="container py-2 mb-4">
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Date&Time</th>
+                    <th>Author</th>
+                    <th>Banner</th>
+                    <th>Comments</th>
+                    <th>Action</th>
+                    <th>Live Preview</th>
+                </tr>
+                </thead>
+                <?php 
+                $ConnectingDB;
+                $sql = "SELECT * FROM post";
+                $stmt = $ConnectingDB->query($sql);
+                $Sr = 0;
+                while ($DataRows = $stmt->fetch()){
+                    $Id         = $DataRows["id"];
+                    $DateTime   = $DataRows["datetime"];
+                    $PostTitle  = $DataRows["title"];
+                    $Category   = $DataRows["category"];
+                    $Admin      = $DataRows["author"];
+                    $Image   = $DataRows["image"];
+                    $PostText   = $DataRows["post"];
+                    $Sr++;
+                ?>
+                <tbody>
+                <tr>
+                    <td><?php echo $Sr; ?></td>
+                    <td><?php echo $PostTitle ?></td>
+                    <td><?php echo $Category ?></td>
+                    <td><?php echo $DateTime ?></td>
+                    <td><?php echo $Admin ?></td>
+                    <td><?php echo $Image ?></td>
+                    <td>Comments</td>
+                    <td>Action</td>
+                    <td>Live Preview</td>
+                </tr>
+                </tbody>
+                <?php } ?>
+            </table>
+        </div>
+    </div>
+</section>
+<!-- MAIN AREA END -->
 <!-- FOOTER -->
 <footer class="bg-dark text-white">
     <div class="container">
