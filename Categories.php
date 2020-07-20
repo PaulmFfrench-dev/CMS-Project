@@ -5,6 +5,9 @@
 if(isset($_POST["Submit"])){
     $Category = $_POST["CategoryTitle"];
     $Admin = "Paul";
+    date_default_timezone_set("Europe/Dublin");
+    $CurrentTime=time();
+    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
 
     if(empty($Category)){
         $_SESSION["ErrorMessage"]= "All fields must be filled out";
@@ -17,6 +20,23 @@ if(isset($_POST["Submit"])){
         Redirect_to("Categories.php");
     }else{
         //Query to Insert category in DB when all validation passes
+        $ConnectingDB
+        $sql = "INSERT INTO category(title,author,datetime)";
+        $sql .= "VALUES(:categoryName,:adminName,:dateTime)";
+        $stmt = $ConnectingDB->prepare($sql);
+        $stmt->bindValue(':categoryName',$Category);
+        $stmt->bindValue(':adminName',$Admin);
+        $stmt->bindValue(':dateTime',$DateTime);
+        $Execute=$stmt->execute();
+        
+        if($Execute){
+            $_SESSION["SuccessMessage"]="Catergory with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
+            Redirect_to("Categories.php");
+        }else{
+            $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
+            Redirect_to("Categories.php");
+        }
+
     }
 }//Ending of Submit Button If-Condition
 ?>
