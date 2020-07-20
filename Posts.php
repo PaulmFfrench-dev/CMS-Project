@@ -128,10 +128,13 @@
                     <td><?php echo $Category ?></td>
                     <td><?php echo $DateTime ?></td>
                     <td><?php echo $Admin ?></td>
-                    <td><?php echo $Image ?></td>
+                    <td><img src="Uploads/<?php echo $Image; ?>" width="170px;" height="50px"></td>
                     <td>Comments</td>
-                    <td>Action</td>
-                    <td>Live Preview</td>
+                    <td>
+                        <a href="#"><span class="btn btn-warning">Edit</span></a>
+                        <a href="#"><span class="btn btn-danger">Delete</span></a>
+                    </td>
+                    <td><a href="#"><span class="btn btn-primary">Preview</span></a></td>
                 </tr>
                 </tbody>
                 <?php } ?>
