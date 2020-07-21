@@ -28,10 +28,10 @@
                     <a href="Blog.php" class="nav-link">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#.php" class="nav-link">About Us</a>
+                    <a href="#" class="nav-link">About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a href="Blog.php.php" class="nav-link">Blog</a>
+                    <a href="Blog.php" class="nav-link">Blog</a>
                 </li>
                 <li class="nav-item">
                     <a href="#" class="nav-link">Contact Us</a>
@@ -41,12 +41,11 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <form class="form-inline d-none d-sm-block" action="Blog.php" method="post">
+                <form class="form-inline d-none d-sm-block" action="Blog.php">
                     <div class="form-group">
-                        <input class="form-control mr-2" type="text" name="Search" placeholder="Search here" value="">
-                        <button type="button" class="btn btn-primary" name="SearchButton">Go</button>
+                        <input class="form-control mr-2" type="text" name="Search" placeholder="Search here"value="">
+                        <button class="btn btn-primary" name="SearchButton1">Go</button>
                     </div>
-
                 </form>
             </ul>
             </div>
@@ -64,8 +63,22 @@
             <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
             <?php 
             $ConnectingDB;
-            $sql = "SELECT * FROM post ORDER BY id desc";
-            $stmt = $ConnectingDB->query($sql);
+            // SQL query when search button is active /* Only select results if the search matches title OR post OR category*/
+            if(isset($_GET["SearchButton1"])){ 
+                $Search = $_GET["Search"];
+                $sql = "SELECT * FROM posts 
+                WHERE datetime LIKE :search 
+                OR title LIKE :search
+                OR category LIKE :search 
+                OR post LIKE :search"; 
+                $stmt = $ConnectingDB->prepare($sql); //Uses DB connection and prepares sql data
+                $stmt->bindValue(':search','%'.$Search.'%'); //Look for search input field
+                $stmt->execute();
+            }
+            else{
+                $sql = "SELECT * FROM posts ORDER BY id desc";
+                $stmt = $ConnectingDB->query($sql);
+            }
             while ($DataRows = $stmt->fetch()){
                 $PostId            = $DataRows["id"];
                 $DateTime          = $DataRows["datetime"];
@@ -83,8 +96,7 @@
                     <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
                     <span style="float:right;" class="badge badge-dark text-light">Comments 20</span>
                     <hr>
-                    <p class="card-text">
-                        <?php if(strlen($PostDescritpion)>150) { $PostDescritpion = substr($PostDescritpion,0,150)."...";} echo $PostDescritpion; ?></p>
+                    <p class="card-text"> <?php if(strlen($PostDescritpion)>150) { $PostDescritpion = substr($PostDescritpion,0,150)."...";} echo $PostDescritpion; ?></p>
                     <a href="FullPost.php" style="float:right;">
                         <span class="btn btn-info">Read More>></span>
                     </a>

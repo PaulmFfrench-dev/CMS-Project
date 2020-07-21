@@ -25,7 +25,7 @@ if(isset($_POST["Submit"])){
     }else{
         //Query to Insert Post in DB when all validation passes
         $ConnectingDB;
-        $sql = "INSERT INTO post(datetime,title,category,author,image,post)";
+        $sql = "INSERT INTO posts(datetime,title,category,author,image,post)";
         $sql .= "VALUES(:dateTime,:postTitle,:categoryName,:adminName,:imageName,:postDescription)";
         $stmt = $ConnectingDB->prepare($sql);
         $stmt->bindValue(':dateTime',$DateTime);

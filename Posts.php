@@ -108,7 +108,7 @@
                 </thead>
                 <?php 
                 $ConnectingDB;
-                $sql = "SELECT * FROM post";
+                $sql = "SELECT * FROM posts";
                 $stmt = $ConnectingDB->query($sql);
                 $Sr = 0;
                 while ($DataRows = $stmt->fetch()){
