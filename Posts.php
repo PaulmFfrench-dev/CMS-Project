@@ -151,10 +151,10 @@
                     <td><img src="Uploads/<?php echo $Image; ?>" width="170px;" height="50px"></td>
                     <td>Comments</td>
                     <td>
-                        <a href="#"><span class="btn btn-warning">Edit</span></a>
-                        <a href="#"><span class="btn btn-danger">Delete</span></a>
+                        <a href="EditPost.php?id=<?php echo $Id; ?>"><span class="btn btn-warning">Edit</span></a>
+                        <a href="DeletePost.php?id=<?php echo $Id; ?>"><span class="btn btn-danger">Delete</span></a>
                     </td>
-                    <td><a href="#"><span class="btn btn-primary">Preview</span></a></td>
+                    <td><a href="FullPost.php?id=<?php echo $Id; ?>" target="_blank"><span class="btn btn-primary">Preview</span></a></td>
                 </tr>
                 </tbody>
                 <?php } ?>
