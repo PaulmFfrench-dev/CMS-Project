@@ -2,6 +2,44 @@
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
 <?php $SearchQueryParameter = $_GET["id"]?>
+<?php 
+if(isset($_POST["Submit"])){
+    $Name = $_POST["CommenterName"];
+    $Email = $_POST["CommenterEmail"];
+    $Comment = $_POST["CommenterThoughts"];
+    date_default_timezone_set("Europe/Dublin");
+    $CurrentTime=time();
+    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
+
+    if(empty($Name)||empty($Email)||empty($Comment)){
+        $_SESSION["ErrorMessage"]= "All fields must be filled out";
+        Redirect_to("FullPost.php?id=$SearchQueryParameter"); //So the user stays on the same page
+    }elseif(strlen($Comment)>500){
+        $_SESSION["ErrorMessage"]= "Category title should be less than 500 characters";
+        Redirect_to("FullPost.php?id=$SearchQueryParameter");
+    }else{
+        //Query to Insert comment in DB when all validation passes
+        $ConnectingDB;
+        $sql = "INSERT INTO comments(datetime,name,email,comment)";
+        $sql .= "VALUES(:dateTime,:name,:email,:comment)";
+        $stmt = $ConnectingDB->prepare($sql);
+        $stmt->bindValue(':dateTime',$DateTime);
+        $stmt->bindValue(':name',$Name);
+        $stmt->bindValue(':email',$Email);
+        $stmt->bindValue(':comment',$Comment);
+        $Execute=$stmt->execute();
+        
+        if($Execute){
+            $_SESSION["SuccessMessage"]="Comment Submitted Successfully";
+            Redirect_to("FullPost.php?id=$SearchQueryParameter");
+        }else{
+            $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
+            Redirect_to("FullPost.php?id=$SearchQueryParameter");
+        }
+
+    }
+}//Ending of Submit Button If-Condition
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,6 +100,10 @@
             <h1>The Complete Responsive CMS Blog</h1>
             <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
             <?php 
+            echo ErrorMessage();
+            echo SuccessMessage();
+            ?>
+            <?php 
             $ConnectingDB;
             // SQL query when search button is active /* Only select results if the search matches title OR post OR category*/
             if(isset($_GET["SearchButton1"])){ 
@@ -109,7 +151,7 @@
             </div>
             <?php } ?>
             <div class="">
-                <form class="" action="FullPost.php?=<?php echo $SearchQueryParameter ?>" method="post">
+                <form class="" action="FullPost.php?id=<?php echo $SearchQueryParameter ?>" method="post">
                     <div class="card mb-3">
                         <div class="card-header">
                             <h5 class="FieldInfo">Share your thoughts about this post</h5>
