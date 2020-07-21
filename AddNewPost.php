@@ -19,8 +19,8 @@ if(isset($_POST["Submit"])){
     }elseif(strlen($PostTitle)<5){
         $_SESSION["ErrorMessage"]= "Post title should be greater than 5 characters";
         Redirect_to("AddNewPost.php");
-    }elseif(strlen($PostText)>999){
-        $_SESSION["ErrorMessage"]= "Post Description should be less than 1000 characters";
+    }elseif(strlen($PostText)>9999){
+        $_SESSION["ErrorMessage"]= "Post Description should be less than 10000 characters";
         Redirect_to("AddNewPost.php");
     }else{
         //Query to Insert Post in DB when all validation passes
