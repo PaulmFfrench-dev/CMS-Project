@@ -74,18 +74,23 @@
                 $Admin             = $DataRows["author"];
                 $Image             = $DataRows["image"];
                 $PostDescritpion   = $DataRows["post"];
-            }
+            
             ?>
              <div class="card">
-                 <img src="Uploads/<?php echo $Image; ?>" style="max-height:450px;"class="img-fluid card-img-top" />
+                 <img src="Uploads/<?php echo htmlentities($Image); ?>" style="max-height:450px;"class="img-fluid card-img-top" />
                 <div class="card-body">
-                    <h4 class="card-title"><?php echo $PostTitle; ?></h4>
-                    <small class="text-muted">Written by <?php echo $Admin; ?> On <?php echo $DateTime; ?></small>
+                    <h4 class="card-title"><?php echo htmlentities($PostTitle); ?></h4>
+                    <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+                    <span style="float:right;" class="badge badge-dark text-light">Comments 20</span>
                     <hr>
-                    <p class="card-text"><?php echo $PostDescritpion; ?></p>
+                    <p class="card-text">
+                        <?php if(strlen($PostDescritpion)>150) { $PostDescritpion = substr($PostDescritpion,0,150)."...";} echo $PostDescritpion; ?></p>
+                    <a href="FullPost.php" style="float:right;">
+                        <span class="btn btn-info">Read More>></span>
+                    </a>
                 </div>
-
             </div>
+            <?php } ?>
         </div>
         <!--MAIN AREA END -->
 
