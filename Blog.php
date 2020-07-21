@@ -52,15 +52,21 @@
 <!-- NAVBAR END-->  
  
 <!-- HEADER -->
-<header class="bg-dark text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1><i class="fas fa-text-height" style="color:#27aae1;"></i>Example</h1>
-            </div>
+<div class="container">
+    <div class="row mt-4">
+        <!--MAIN AREA START -->
+        <div class="col-sm-8">
+            <h1>The Complete Responsive CMS Blog</h1>
+            <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
         </div>
+        <!--MAIN AREA END -->
+
+        <!--SIDE AREA START -->
+        <div class="col-sm-4" style="min-height:40px; background:green;">
+        </div>
+        <!--SIDE AREA END -->
     </div>
-</header>
+</div>
 <!-- HEADER END-->
 <br>
 <!-- FOOTER -->
