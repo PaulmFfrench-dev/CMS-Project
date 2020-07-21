@@ -1,7 +1,7 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
-
+<?php $SearchQueryParameter = $_GET["id"]?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -108,6 +108,38 @@
                 </div>
             </div>
             <?php } ?>
+            <div class="">
+                <form class="" action="FullPost.php?=<?php echo $SearchQueryParameter ?>" method="post">
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <h5 class="FieldInfo">Share your thoughts about this post</h5>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    </div>
+                                <input class="form-control" type="text" name="CommenterName" placeholder="Name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    </div>
+                                <input class="form-control" type="email" name="CommenterEmail" placeholder="Name" value="">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <textarea name="CommenterThoughts" class="form-control" cols="30" rows="10"></textarea>
+                            </div>
+                            <button type="submit" name="Submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         <!--MAIN AREA END -->
 
