@@ -77,6 +77,10 @@
             }
             else{
                 $PostIdFromURL = $_GET["id"];
+                if(!isset($PostIdFromURL)){
+                    $_SESSION["ErrorMessage"]="Bad Request!";
+                    Redirect_to("Blog.php");
+                }
                 $sql = "SELECT * FROM posts WHERE id='$PostIdFromURL'";
                 $stmt = $ConnectingDB->query($sql);
             }
@@ -97,7 +101,7 @@
                     <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
                     <span style="float:right;" class="badge badge-dark text-light">Comments 20</span>
                     <hr>
-                    <p class="card-text"> <?php if(strlen($PostDescritpion)>150) { $PostDescritpion = substr($PostDescritpion,0,150)."...";} echo $PostDescritpion; ?></p>
+                    <p class="card-text"> <?php echo $PostDescritpion; ?></p>
                     <a href="FullPost.php?id=<?php echo $PostId; ?>" style="float:right;">
                         <span class="btn btn-info">Read More>></span>
                     </a>

@@ -62,6 +62,10 @@
             <h1>The Complete Responsive CMS Blog</h1>
             <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
             <?php 
+            echo ErrorMessage();
+            echo SuccessMessage();
+            ?>
+            <?php 
             $ConnectingDB;
             // SQL query when search button is active /* Only select results if the search matches title OR post OR category*/
             if(isset($_GET["SearchButton1"])){ 
