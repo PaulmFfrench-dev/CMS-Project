@@ -20,13 +20,14 @@ if(isset($_POST["Submit"])){
     }else{
         //Query to Insert comment in DB when all validation passes
         $ConnectingDB;
-        $sql = "INSERT INTO comments(datetime,name,email,comment,approvedby,status)";
-        $sql .= "VALUES(:dateTime,:name,:email,:comment,'Pending','OFF')";
+        $sql = "INSERT INTO comments(datetime,name,email,comment,approvedby,status,post_id)";
+        $sql .= "VALUES(:dateTime,:name,:email,:comment,'Pending','OFF',:postIdFromURL)";
         $stmt = $ConnectingDB->prepare($sql);
         $stmt->bindValue(':dateTime',$DateTime);
         $stmt->bindValue(':name',$Name);
         $stmt->bindValue(':email',$Email);
         $stmt->bindValue(':comment',$Comment);
+        $stmt->bindValue(':postIdFromURL',$SearchQueryParameter);
         $Execute=$stmt->execute();
         
         if($Execute){
