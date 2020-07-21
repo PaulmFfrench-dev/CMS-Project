@@ -117,7 +117,7 @@
                     $PostTitle  = $DataRows["title"];
                     $Category   = $DataRows["category"];
                     $Admin      = $DataRows["author"];
-                    $Image   = $DataRows["image"];
+                    $Image      = $DataRows["image"];
                     $PostText   = $DataRows["post"];
                     $Sr++;
                 ?>

@@ -1,3 +1,7 @@
+<?php require_once("Include/DB.php"); ?>
+<?php require_once("Include/Functions.php"); ?>
+<?php require_once("Include/Sessions.php"); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,6 +62,20 @@
         <div class="col-sm-8">
             <h1>The Complete Responsive CMS Blog</h1>
             <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
+            <?php 
+            $ConnectingDB;
+            $sql = "SELECT * FROM posts";
+            $stmt = $ConnectingDB->($sql);
+            while ($DataRows = $stmt->fetch()){
+                $PostId            = $DataRows["id"];
+                $DateTime          = $DataRows["datetime"];
+                $PostTitle         = $DataRows["title"];
+                $Category          = $DataRows["category"];
+                $Admin             = $DataRows["author"];
+                $Image             = $DataRows["image"];
+                $PostDescritpion   = $DataRows["post"];
+            }
+            ?>
         </div>
         <!--MAIN AREA END -->
 
