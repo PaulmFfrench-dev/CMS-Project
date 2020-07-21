@@ -76,7 +76,8 @@
                 $stmt->execute();
             }
             else{
-                $sql = "SELECT * FROM posts ORDER BY id desc";
+                $PostIdFromURL = $_GET["id"];
+                $sql = "SELECT * FROM posts WHERE id='$PostIdFromURL'";
                 $stmt = $ConnectingDB->query($sql);
             }
             while ($DataRows = $stmt->fetch()){
