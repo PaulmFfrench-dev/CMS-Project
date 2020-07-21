@@ -76,6 +76,16 @@
                 $PostDescritpion   = $DataRows["post"];
             }
             ?>
+             <div class="card">
+                 <img src="Uploads/<?php echo $Image; ?>" style="max-height:450px;"class="img-fluid card-img-top" />
+                <div class="card-body">
+                    <h4 class="card-title"><?php echo $PostTitle; ?></h4>
+                    <small class="text-muted">Written by <?php echo $Admin; ?> On <?php echo $DateTime; ?></small>
+                    <hr>
+                    <p class="card-text"><?php echo $PostDescritpion; ?></p>
+                </div>
+
+            </div>
         </div>
         <!--MAIN AREA END -->
 
