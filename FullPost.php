@@ -151,6 +151,33 @@ if(isset($_POST["Submit"])){
                 </div>
             </div>
             <?php } ?>
+            <!-- COMMENT PART START -->
+
+            <!-- Fetching exisiting comment START-->
+            <span class="FieldInfo">Comments</span>
+            <br><br>
+            <?php 
+            $ConnectingDB;
+            $sql = "SELECT * FROM comments WHERE post_id='$SearchQueryParameter' AND status='OFF'";
+            $stmt = $ConnectingDB->query($sql);
+            while($DataRows = $stmt->fetch()){
+                $CommentDate = $DataRows['datetime'];
+                $CommenterName = $DataRows['name'];
+                $CommentContent = $DataRows['comment'];
+            ?>
+            <div>
+                <div class="media CommentColor">
+                    <img class="d-block img-fluid align" src="images/comment.png" alt="">
+                    <div class="media-body ml-2">
+                        <h6 class="lead"><?php echo $CommenterName; ?></h6>
+                        <p class="small"><?php echo $CommentDate; ?></p>
+                        <p><?php echo $CommentContent; ?></p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <?php } ?>
+            <!-- Fetching exisiting comment END-->
             <div class="">
                 <form class="" action="FullPost.php?id=<?php echo $SearchQueryParameter ?>" method="post">
                     <div class="card mb-3">
@@ -183,6 +210,7 @@ if(isset($_POST["Submit"])){
                     </div>
                 </form>
             </div>
+            <!-- COMMENT PART END -->
         </div>
         <!--MAIN AREA END -->
 
