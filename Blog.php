@@ -65,7 +65,7 @@
             <?php 
             $ConnectingDB;
             $sql = "SELECT * FROM post";
-            $stmt = $ConnectingDB->($sql);
+            $stmt = $ConnectingDB->query($sql);
             while ($DataRows = $stmt->fetch()){
                 $PostId            = $DataRows["id"];
                 $DateTime          = $DataRows["datetime"];
