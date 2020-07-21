@@ -64,7 +64,7 @@
             <h1 class="lead">The Complete Blog by using PHP by Paul Ffrench</h1>
             <?php 
             $ConnectingDB;
-            $sql = "SELECT * FROM post";
+            $sql = "SELECT * FROM post ORDER BY id desc";
             $stmt = $ConnectingDB->query($sql);
             while ($DataRows = $stmt->fetch()){
                 $PostId            = $DataRows["id"];
