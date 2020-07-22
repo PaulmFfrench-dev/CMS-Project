@@ -78,9 +78,13 @@
                 $stmt = $ConnectingDB->prepare($sql); //Uses DB connection and prepares sql data
                 $stmt->bindValue(':search','%'.$Search.'%'); //Look for search input field
                 $stmt->execute();
-            }elseif(isset($_GET["page"])){
+            }elseif(isset($_GET["page"])){ 
                 $Page = $_GET["page"];
+                if($Page==0||$Page<1){ // Will display pages from 0 to 4 index when page number is 0 or less
+                    $ShowPostFrom=0;
+                }else{
                 $ShowPostFrom=($Page*4)-4;
+            }
                 $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
                 $stmt = $ConnectingDB->query($sql); //stmt variable
             }
