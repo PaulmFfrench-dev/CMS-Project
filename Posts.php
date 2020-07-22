@@ -1,7 +1,10 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
-<?php Confirm_Login(); ?>
+<?php 
+$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"];
+//echo $_SESSION["TrackingURL"];
+Confirm_Login(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

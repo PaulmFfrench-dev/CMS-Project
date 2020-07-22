@@ -2,6 +2,9 @@
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
 <?php 
+if(isset($_SESSION["UserId"])){
+    Redirect_to("Dashboard.php");
+}
 if(isset($_POST["Submit"])){
     $UserName = $_POST["Username"];
     $Password = $_POST["Password"];
@@ -11,11 +14,15 @@ if(isset($_POST["Submit"])){
     }else{
         $Found_Account=Login_Attempt($UserName,$Password);
         if ($Found_Account){ //If there is content in the found account variable, fetch the following SESSION variables
-            $_SESSION["User_ID"]=$Found_Account["id"];
+            $_SESSION["UserId"]=$Found_Account["id"];
             $_SESSION["Username"]=$Found_Account["username"];
             $_SESSION["AdminName"]=$Found_Account["aname"];
             $_SESSION["SuccessMessage"]="Welcome ".$_SESSION["AdminName"];
-            Redirect_to("Dashboard.php");
+            if (isset($_SESSION["TrackingURL"])) {
+                Redirect_to($_SESSION["TrackingURL"]);
+            }else{
+                Redirect_to("Dashboard.php");
+            }
         }else{
             $_SESSION["ErrorMessage"]="Incorrect Username/Password";
             Redirect_to("Login.php");
