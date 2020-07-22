@@ -74,6 +74,10 @@ Confirm_Login();
 <section class="container py-2 mb-4">
     <div class="row" style="min-height:30px;">
     <div class="col-lg-12" stlye="min-height:400px;">
+         <?php 
+            echo ErrorMessage();
+            echo SuccessMessage();
+        ?>
         <table class="table table=striped table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -107,8 +111,8 @@ Confirm_Login();
                 <td><?php echo htmlentities($DateTimeOfComment); ?></td>
                 <td><?php echo htmlentities($CommenterName); ?></td>
                 <td><?php echo htmlentities($CommentContent); ?></td>
-                <td> <a href="ApproveComment.php?id=<?php echo $CommentId?>" class="btn btn-success">Approve</a></td>
-                <td> <a href="DeleteComment.php?id=<?php echo $CommentId?>" class="btn btn-danger">Delete</a></td>
+                <td> <a href="ApproveComments.php?id=<?php echo $CommentId?>" class="btn btn-success">Approve</a></td>
+                <td> <a href="DeleteComments.php?id=<?php echo $CommentId?>" class="btn btn-danger">Delete</a></td>
                 <td><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" targer="_blank">Live Preview</a></td>
             </tr>
         </tbody>

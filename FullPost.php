@@ -158,7 +158,7 @@ if(isset($_POST["Submit"])){
             <br><br>
             <?php 
             $ConnectingDB;
-            $sql = "SELECT * FROM comments WHERE post_id='$SearchQueryParameter' AND status='OFF'";
+            $sql = "SELECT * FROM comments WHERE post_id='$SearchQueryParameter' AND status='ON'";
             $stmt = $ConnectingDB->query($sql);
             while($DataRows = $stmt->fetch()){
                 $CommentDate = $DataRows['datetime'];
