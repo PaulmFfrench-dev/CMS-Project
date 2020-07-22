@@ -159,12 +159,8 @@ Confirm_Login(); ?>
                         <td><?php echo $DateTime; ?></td>
                         <td><?php echo $Title; ?></td>
                         <td>
-                                <?php 
-                                $ConnectingDB;
-                                $sqlApproved = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='ON'";
-                                $stmtApproved = $ConnectingDB->query($sqlApproved);
-                                $RowsTotal = $stmtApproved->fetch();
-                                $Total = array_shift($RowsTotal);
+                            <?php 
+                                $Total = ApproveCommentsAccordingToPost($PostId);
                                 if ($Total>0){
                                     ?>
                                     <span class="badge badge-success">
@@ -175,11 +171,7 @@ Confirm_Login(); ?>
                                 }
                                 ?>
                             <?php 
-                                $ConnectingDB;
-                                $sqlDisApproved = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='OFF'";
-                                $stmtDisApproved = $ConnectingDB->query($sqlDisApproved);
-                                $RowsTotal = $stmtDisApproved->fetch();
-                                $Total = array_shift($RowsTotal);
+                                $Total = DisApproveCommentsAccordingToPost($PostId);
                                 if ($Total>0){
                                     ?>
                                     <span class="badge badge-danger">
