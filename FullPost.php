@@ -141,7 +141,7 @@ if(isset($_POST["Submit"])){
                  <img src="Uploads/<?php echo htmlentities($Image); ?>" style="max-height:450px;"class="img-fluid card-img-top" />
                 <div class="card-body">
                     <h4 class="card-title"><?php echo htmlentities($PostTitle); ?></h4>
-                    <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
+                    <small class="text-muted">Category: <span class="text-dark"><?php echo $Category; ?></span> & Written by <span class="text-dark"><?php echo htmlentities($Admin); ?></span> On <span class="text-dark"><?php echo htmlentities($DateTime); ?></span></small>
                     <hr>
                     <p class="card-text"> <?php echo $PostDescritpion; ?></p>
                     <a href="FullPost.php?id=<?php echo $PostId; ?>" style="float:right;">
