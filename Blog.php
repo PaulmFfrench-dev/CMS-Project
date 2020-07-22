@@ -215,7 +215,35 @@
                         <a href="Blog.php?category=<?php echo $CategoryName; ?>"><span class="heading"><?php echo $CategoryName; ?><br></span></a>
                         <?php }?>
                     </div>
-            </div>
+                 </div>
+                 <br>
+                 <div class="card">
+                     <div class="card-header bg-info text-white"> 
+                        <h2 class="lead">Recent Posts</h2>
+                     </div>
+                     <div class="card-body">
+                         <?php 
+                         $ConnectingDB;
+                         $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,5";
+                         $stmt = $ConnectingDB->query($sql);
+                         while ($DataRows=$stmt->fetch()){
+                             $Id        =$DataRows['id'];
+                             $Title     =$DataRows['title'];
+                             $DateTime  =$DataRows['datetime'];
+                             $Image     =$DataRows['image'];
+                         ?>
+                         <div class="media">
+                            <img src="Uploads/<?php echo htmlentities($Image); ?>" class="d-block ing-fluid align-self-start" width="90" height="94" alt="" >
+                            <div class="media-body m1-2">
+                                <a href="FullPost.php?id=<?php echo htmlentities($Id); ?>" target="_blank"><h6 class="lead ml-1"><?php echo $Title; ?></h6></a>
+                                <p class="small ml-1"><?php echo htmlentities($DateTime); ?></p>
+                            </div>
+                         </div>
+                         <hr>
+                         <?php } ?>
+                     </div>
+
+                 </div>
         </div>
         <!--SIDE AREA END -->
     </div>
