@@ -83,9 +83,9 @@
                 if($Page==0||$Page<1){ // Will display pages from 0 to 4 index when page number is 0 or less
                     $ShowPostFrom=0;
                 }else{
-                $ShowPostFrom=($Page*4)-4;
+                $ShowPostFrom=($Page*5)-5;
             }
-                $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
+                $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,5";
                 $stmt = $ConnectingDB->query($sql); //stmt variable
             }
             else{
@@ -102,7 +102,7 @@
                 $PostDescritpion   = $DataRows["post"];
             
             ?>
-             <div class="card">
+             <div class="card mb-1">
                  <img src="Uploads/<?php echo htmlentities($Image); ?>" style="max-height:450px;"class="img-fluid card-img-top" />
                 <div class="card-body">
                     <h4 class="card-title"><?php echo htmlentities($PostTitle); ?></h4>
@@ -116,6 +116,27 @@
                 </div>
             </div>
             <?php } ?>
+            <!--Pagination-->
+            <nav class="mt-3">
+                <ul class="pagination pagination-lg">
+                    <?php 
+                    $ConnectionDB;
+                    $sql = "SELECT COUNT(*) FROM posts";
+                    $stmt =$ConnectingDB->query($sql);
+                    $RowPagination=$stmt->fetch();
+                    $TotalPosts=array_shift($RowPagination);
+                    // echo $TotalPosts."<br>";
+                    $PostPaginationation=$TotalPosts/5;
+                    $PostPaginationation=ceil($PostPaginationation);
+                    // echo $PostPaginationation;
+                    for ($i=1; $i <=$PostPaginationation ; $i++){
+                    ?>
+                    <li>
+                        <a href="Blog.php?page=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </nav>
         </div>
         <!--MAIN AREA END -->
 
