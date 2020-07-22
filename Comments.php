@@ -1,3 +1,10 @@
+<?php require_once("Include/DB.php"); ?>
+<?php require_once("Include/Functions.php"); ?>
+<?php require_once("Include/Sessions.php"); ?>
+<?php 
+$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"];
+Confirm_Login();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,7 +71,52 @@
     </div>
 </header>
 <!-- HEADER END-->
-
+<section class="container py-2 mb-4">
+    <div class="row" style="min-height:30px;">
+    <div class="col-lg-12" stlye="min-height:400px;">
+        <table class="table table=striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>No.</th>
+                    <th>Date&Time</th>
+                    <th>Name</th>
+                    <th>Comment</th>
+                    <th>Approve</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                </tr>
+            </thead>
+        <h2>Un-Approved Comments</h2>
+        <?php 
+        $ConnectingDB;
+        $sql = "SELECT * FROM comments WHERE status ='OFF' ORDER BY id desc";
+        $Execute = $ConnectingDB->query($sql);
+        $SrNo = 0;
+        while ($DataRows=$Execute->fetch()) {
+            $CommentId = $DataRows["id"];
+            $DateTimeOfComment = $DataRows["datetime"];
+            $CommenterName = $DataRows["name"];
+            $CommentContent = $DataRows["comment"];
+            $CommentPostId = $DataRows["post_id"];
+            $SrNo++;
+            
+        ?>
+        <tbody>
+            <tr>
+                <td><?php echo htmlentities($SrNo); ?></td>
+                <td><?php echo htmlentities($DateTimeOfComment); ?></td>
+                <td><?php echo htmlentities($CommenterName); ?></td>
+                <td><?php echo htmlentities($CommentContent); ?></td>
+                <td> <a href="ApproveComment.php?id=<?php echo $CommentId?>" class="btn btn-success">Approve</a></td>
+                <td> <a href="DeleteComment.php?id=<?php echo $CommentId?>" class="btn btn-danger">Delete</a></td>
+                <td><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" targer="_blank">Live Preview</a></td>
+            </tr>
+        </tbody>
+        <?php } ?>
+        </table>
+    </div>
+    </div>
+</section>
 <!-- FOOTER -->
 <footer class="bg-dark text-white">
     <div class="container">
