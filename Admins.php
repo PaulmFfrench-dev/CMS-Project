@@ -8,6 +8,7 @@ if(isset($_POST["Submit"])){
     $Password        = $_POST["Password"];
     $ConfirmPassword = $_POST["ConfirmPassword"];
     $Admin = "Paul";
+    
     date_default_timezone_set("Europe/Dublin");
     $CurrentTime=time();
     $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
@@ -20,6 +21,9 @@ if(isset($_POST["Submit"])){
         Redirect_to("Admins.php");
     }elseif($Password !== $ConfirmPassword){
         $_SESSION["ErrorMessage"]= "Password and Confirm Password should match";
+        Redirect_to("Admins.php");
+    }elseif (CheckUserNameExistsOrNot($UserName)){
+        $_SESSION["ErrorMessage"]= "Username Exists. Try another one!";
         Redirect_to("Admins.php");
     }else{
         //Query to Insert Admin into DB when all validation passes
