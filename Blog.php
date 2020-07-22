@@ -78,7 +78,7 @@
                 $stmt = $ConnectingDB->prepare($sql); //Uses DB connection and prepares sql data
                 $stmt->bindValue(':search','%'.$Search.'%'); //Look for search input field
                 $stmt->execute();
-            }elseif(isset($_GET["page"])){ 
+            }elseif(isset($_GET["page"])){ //Query when Pagination is active i.e Blog.php?page=1
                 $Page = $_GET["page"];
                 if($Page==0||$Page<1){ // Will display pages from 0 to 4 index when page number is 0 or less
                     $ShowPostFrom=0;
@@ -88,8 +88,9 @@
                 $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,5";
                 $stmt = $ConnectingDB->query($sql); //stmt variable
             }
+            // Default sql query
             else{
-                $sql = "SELECT * FROM posts ORDER BY id desc";
+                $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,3";
                 $stmt = $ConnectingDB->query($sql);
             }
             while ($DataRows = $stmt->fetch()){ //stmt object
@@ -118,7 +119,16 @@
             <?php } ?>
             <!--Pagination-->
             <nav class="mt-3">
+                <!-- Creating Forward Button -->
                 <ul class="pagination pagination-lg">
+                <?php
+                    if (isset($Page)){
+                        if($Page>1){ //Limits forward Button
+                    ?>
+                    <li class="page-item">
+                        <a href="Blog.php?page=<?php echo $Page-1; ?>" class="page-link">&laquo;</a> <!-- Special Connectors -->
+                    </li>
+                    <?php } }?>
                     <?php 
                     $ConnectionDB;
                     $sql = "SELECT COUNT(*) FROM posts";
@@ -126,15 +136,32 @@
                     $RowPagination=$stmt->fetch();
                     $TotalPosts=array_shift($RowPagination);
                     // echo $TotalPosts."<br>";
-                    $PostPaginationation=$TotalPosts/5;
-                    $PostPaginationation=ceil($PostPaginationation);
+                    $PostPagination=$TotalPosts/5;
+                    $PostPagination=ceil($PostPagination);
                     // echo $PostPaginationation;
-                    for ($i=1; $i <=$PostPaginationation ; $i++){
+                    for ($i=1; $i <=$PostPagination ; $i++) {
+                        if( isset($Page)&&!empty($Page) ){
+                            if($i == $Page) { //If i index is equal to page have list item with active class
                     ?>
-                    <li>
+                    <li class="page-item active">
                         <a href="Blog.php?page=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a>
                     </li>
-                    <?php } ?>
+                    <?php 
+                    }else {
+                    ?>
+                    <li class="page-item">
+                        <a href="Blog.php?page=<?php echo $i; ?>" class="page-link"><?php echo $i; ?></a>
+                    </li>
+                    <?php } } }?>
+                    <!-- Creating Forward Button -->
+                    <?php
+                    if (isset($Page)){
+                        if($Page+1<=$PostPagination){ //Limits forward Button
+                    ?>
+                    <li class="page-item">
+                        <a href="Blog.php?page=<?php echo $Page+1; ?>" class="page-link">&raquo;</a> <!-- Special Connectors -->
+                    </li>
+                    <?php } }?>
                 </ul>
             </nav>
         </div>
