@@ -159,10 +159,28 @@ Confirm_Login(); ?>
                         <td><?php echo $DateTime; ?></td>
                         <td><?php echo $Title; ?></td>
                         <td>
-                            <span class="badge badge-success">00</span>
-                            <span class="badge badge-danger">00</span>
+                            <span class="badge badge-success">
+                                <?php 
+                                $ConnectingDB;
+                                $sqlApproved = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='ON'";
+                                $stmtApproved = $ConnectingDB->query($sqlApproved);
+                                $RowsTotal = $stmtApproved->fetch();
+                                $Total = array_shift($RowsTotal);
+                                echo $Total;
+                                ?>
+                            </span>
+                            <span class="badge badge-danger">
+                            <?php 
+                                $ConnectingDB;
+                                $sqlDisApproved = "SELECT COUNT(*) FROM comments WHERE post_id='$PostId' AND status='OFF'";
+                                $stmtDisApproved = $ConnectingDB->query($sqlDisApproved);
+                                $RowsTotal = $stmtDisApproved->fetch();
+                                $Total = array_shift($RowsTotal);
+                                echo $Total;
+                                ?>
+                            </span>
                         </td>
-                        <td><span class="btn btn-info">Preview</span></td>
+                        <td><a target="_blank" href="FullPost.php?id=<?php echo $PostId; ?>"><span class="btn btn-info">Preview</span></a></td>
                     </tr>
                 </tbody>
                     
