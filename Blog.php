@@ -78,12 +78,17 @@
                 $stmt = $ConnectingDB->prepare($sql); //Uses DB connection and prepares sql data
                 $stmt->bindValue(':search','%'.$Search.'%'); //Look for search input field
                 $stmt->execute();
+            }elseif(isset($_GET["page"])){
+                $Page = $_GET["page"];
+                $ShowPostFrom=($Page*4)-4;
+                $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,4";
+                $stmt = $ConnectingDB->query($sql); //stmt variable
             }
             else{
                 $sql = "SELECT * FROM posts ORDER BY id desc";
                 $stmt = $ConnectingDB->query($sql);
             }
-            while ($DataRows = $stmt->fetch()){
+            while ($DataRows = $stmt->fetch()){ //stmt object
                 $PostId            = $DataRows["id"];
                 $DateTime          = $DataRows["datetime"];
                 $PostTitle         = $DataRows["title"];
