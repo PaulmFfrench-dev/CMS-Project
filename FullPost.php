@@ -142,7 +142,6 @@ if(isset($_POST["Submit"])){
                 <div class="card-body">
                     <h4 class="card-title"><?php echo htmlentities($PostTitle); ?></h4>
                     <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
-                    <span style="float:right;" class="badge badge-dark text-light">Comments 20</span>
                     <hr>
                     <p class="card-text"> <?php echo $PostDescritpion; ?></p>
                     <a href="FullPost.php?id=<?php echo $PostId; ?>" style="float:right;">

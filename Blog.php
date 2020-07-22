@@ -98,7 +98,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><?php echo htmlentities($PostTitle); ?></h4>
                     <small class="text-muted">Written by <?php echo htmlentities($Admin); ?> On <?php echo htmlentities($DateTime); ?></small>
-                    <span style="float:right;" class="badge badge-dark text-light">Comments 20</span>
+                    <span style="float:right;" class="badge badge-dark text-light">Comments <?php echo ApproveCommentsAccordingToPost($PostId); ?></span>
                     <hr>
                     <p class="card-text"> <?php if(strlen($PostDescritpion)>150) { $PostDescritpion = substr($PostDescritpion,0,150)."...";} echo $PostDescritpion; ?></p>
                     <a href="FullPost.php?id=<?php echo $PostId; ?>" style="float:right;">
