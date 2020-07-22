@@ -4,7 +4,7 @@
 <?php 
 if(isset($_POST["Submit"])){
     $Category = $_POST["CategoryTitle"];
-    $Admin = "Paul";
+    $Admin = $_SESSION["Username"];
     date_default_timezone_set("Europe/Dublin");
     $CurrentTime=time();
     $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
@@ -20,7 +20,7 @@ if(isset($_POST["Submit"])){
         Redirect_to("Categories.php");
     }else{
         //Query to Insert category in DB when all validation passes
-        $ConnectingDB;
+        global $ConnectingDB;
         $sql = "INSERT INTO category(title,author,datetime)";
         $sql .= "VALUES(:categoryName,:adminName,:dateTime)";
         $stmt = $ConnectingDB->prepare($sql);

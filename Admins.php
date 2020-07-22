@@ -7,8 +7,8 @@ if(isset($_POST["Submit"])){
     $Name            = $_POST["Name"];
     $Password        = $_POST["Password"];
     $ConfirmPassword = $_POST["ConfirmPassword"];
-    $Admin = "Paul";
-    
+    $Admin = $_SESSION["Username"];
+
     date_default_timezone_set("Europe/Dublin");
     $CurrentTime=time();
     $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);

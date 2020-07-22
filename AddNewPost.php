@@ -8,7 +8,7 @@ if(isset($_POST["Submit"])){
     $Image = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
     $Target ="Uploads/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
     $PostText = $_POST["PostDescription"];
-    $Admin = "Paul";
+    $Admin = $_SESSION["Username"];
     date_default_timezone_set("Europe/Dublin");
     $CurrentTime=time();
     $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
