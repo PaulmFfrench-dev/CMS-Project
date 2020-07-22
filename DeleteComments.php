@@ -5,11 +5,10 @@
 if(isset($_GET["id"])){
     $SearchQueryParameter = $_GET["id"];
     $ConnectingDB;
-    $Admin = $_SESSION["AdminName"]; //Pulled from login.php
-    $sql = "UPDATE comments SET status='ON', approvedby='$Admin' WHERE id='$SearchQueryParameter'";
+    $sql = "DELETE FROM comments WHERE id='$SearchQueryParameter'";
     $Execute = $ConnectingDB->query($sql);
     if($Execute) {
-        $_SESSION["SuccessMessage"]="Comment Approved Successfully!";
+        $_SESSION["SuccessMessage"]="Comment Deleted Successfully!";
         Redirect_to("Comments.php");
     }else{
         $_SESSION["ErrorMessage"]="Something Went Wrong. Try Again!";
