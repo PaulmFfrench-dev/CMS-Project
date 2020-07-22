@@ -126,6 +126,51 @@ Confirm_Login(); ?>
             </div>
         </div>
         <!-- Left Side Area END -->
+        <!-- Right Side Area START -->
+        <div class="col-lg-10">
+            <h1>Top Posts</h1>
+            <table class="table table-striped table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>No.</th>
+                        <th>Title</th>
+                        <th>Date&Time</th>
+                        <th>Author</th>
+                        <th>Comments</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <?php 
+                $SrNo=0;
+                $ConnectingDB;
+                $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,5"; //Limits to showing 5 posts
+                $stmt=$ConnectingDB->query($sql);
+                while ($DataRows=$stmt->fetch()){
+                    $PostId = $DataRows["id"];
+                    $DateTime = $DataRows["datetime"];
+                    $Author = $DataRows["author"];
+                    $Title = $DataRows["title"];
+                    $SrNo++
+                ?>
+                <tbody>
+                    <tr>
+                        <td><?php echo $SrNo; ?></td>
+                        <td><?php echo $Author; ?></td>
+                        <td><?php echo $DateTime; ?></td>
+                        <td><?php echo $Title; ?></td>
+                        <td>
+                            <span class="badge badge-success">00</span>
+                            <span class="badge badge-danger">00</span>
+                        </td>
+                        <td><span class="btn btn-info">Preview</span></td>
+                    </tr>
+                </tbody>
+                    
+                <?php
+                }
+                ?>
+            </table>
+        </div>
         <!-- Right Side AREA END -->
         <div class="row">
 
