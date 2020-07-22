@@ -39,4 +39,36 @@ function Confirm_Login(){
         Redirect_to("Login.php");
     }
 }
+function TotalPosts(){
+    global $ConnectingDB;
+    $sql = "SELECT COUNT(*) FROM posts";
+    $stmt = $ConnectingDB->query($sql);
+    $TotalRows = $stmt->fetch();
+    $TotalPosts =array_shift($TotalRows); //Array to string conversion
+    echo $TotalPosts;
+}
+function TotalCategories(){
+    global $ConnectingDB;
+    $sql = "SELECT COUNT(*) FROM category";
+    $stmt = $ConnectingDB->query($sql);
+    $TotalRows = $stmt->fetch();
+    $Totalcategories =array_shift($TotalRows); //Array to string conversion
+    echo $Totalcategories;
+}
+function TotalAdmins(){
+    global $ConnectingDB;
+    $sql = "SELECT COUNT(*) FROM admins";
+    $stmt = $ConnectingDB->query($sql);
+    $TotalRows = $stmt->fetch();
+    $Totaladmins =array_shift($TotalRows); //Array to string conversion
+    echo $Totaladmins;
+}
+function TotalComments(){
+    global $ConnectingDB;
+    $sql = "SELECT COUNT(*) FROM comments";
+    $stmt = $ConnectingDB->query($sql);
+    $TotalRows = $stmt->fetch();
+    $Totalcomments =array_shift($TotalRows); //Array to string conversion
+    echo $Totalcomments;
+}
 ?>

@@ -103,53 +103,25 @@ Confirm_Login(); ?>
             <div class="card text-center bg-dark text-white mb-3">
                 <div class="card-body">
                     <h1 class="lead"> Posts</h1>
-                    <h4 class="display-5"><i class="fab fa-readme"><?php 
-                    $ConnectingDB;
-                    $sql = "SELECT COUNT(*) FROM posts";
-                    $stmt = $ConnectingDB->query($sql);
-                    $TotalRows = $stmt->fetch();
-                    $TotalPosts =array_shift($TotalRows); //Array to string conversion
-                    echo $TotalPosts;
-                    ?></i></h4>
+                    <h4 class="display-5"><i class="fab fa-readme"></i><?php TotalPosts(); ?></h4>
                 </div>
             </div>
             <div class="card text-center bg-dark text-white mb-3">
                 <div class="card-body">
                     <h1 class="lead"> Category</h1>
-                    <h4 class="display-5"><i class="fas fa-folder"><?php 
-                    $ConnectingDB;
-                    $sql = "SELECT COUNT(*) FROM category";
-                    $stmt = $ConnectingDB->query($sql);
-                    $TotalRows = $stmt->fetch();
-                    $Totalcategories =array_shift($TotalRows); //Array to string conversion
-                    echo $Totalcategories;
-                    ?></i></h4>
+                    <h4 class="display-5"><i class="fas fa-folder"></i><?php TotalCategories(); ?></h4>
                 </div>
             </div>
             <div class="card text-center bg-dark text-white mb-3">
                 <div class="card-body">
                     <h1 class="lead"> Admins</h1>
-                    <h4 class="display-5"><i class="fas fa-users"><?php 
-                    $ConnectingDB;
-                    $sql = "SELECT COUNT(*) FROM admins";
-                    $stmt = $ConnectingDB->query($sql);
-                    $TotalRows = $stmt->fetch();
-                    $Totaladmins =array_shift($TotalRows); //Array to string conversion
-                    echo $Totaladmins;
-                    ?></i></h4>
+                    <h4 class="display-5"><i class="fas fa-users"></i><?php TotalAdmins();?></h4>
                 </div>
             </div>
             <div class="card text-center bg-dark text-white mb-3">
                 <div class="card-body">
                     <h1 class="lead"> Comments</h1>
-                    <h4 class="display-5"><i class="fas fa-comments"><?php 
-                    $ConnectingDB;
-                    $sql = "SELECT COUNT(*) FROM comments";
-                    $stmt = $ConnectingDB->query($sql);
-                    $TotalRows = $stmt->fetch();
-                    $Totalcomments =array_shift($TotalRows); //Array to string conversion
-                    echo $Totalcomments;
-                    ?></i></h4>
+                    <h4 class="display-5"><i class="fas fa-comments"></i><?php TotalComments(); ?></h4>
                 </div>
             </div>
         </div>
