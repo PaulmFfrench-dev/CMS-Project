@@ -1,6 +1,7 @@
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
+<?php Confirm_Login(); ?>
 <?php 
 $SearchQueryParameter = $_GET['id'];
 //Fetching existing content according to id
