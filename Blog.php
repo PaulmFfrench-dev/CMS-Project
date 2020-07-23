@@ -1,6 +1,8 @@
+<!-- Requred Files STARTS -->
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
+<!-- Requred Files ENDS -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +17,7 @@
 </head>
 <body>
     <div style="height:10px; background:#27aae1;"></div>
-    <!--Navbar -->
+<!--Navbar START -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a href="#" class="navbar-brand">Paul Ffrench</a>
@@ -40,6 +42,7 @@
                     <a href="#" class="nav-link">Features</a>
                 </li>
             </ul>
+            <!-- Search Button display START -->
             <ul class="navbar-nav ml-auto">
                 <form class="form-inline d-none d-sm-block" action="Blog.php">
                     <div class="form-group">
@@ -48,11 +51,12 @@
                     </div>
                 </form>
             </ul>
+            <!-- Search Button display END -->
             </div>
         </div>
     </nav>
-    <div style="height:10px; background:#27aae1;"></div>
 <!-- NAVBAR END-->  
+    <div style="height:10px; background:#27aae1;"></div>
  
 <!-- HEADER -->
 <div class="container">
@@ -70,7 +74,7 @@
             // SQL query when search button is active /* Only select results if the search matches title OR post OR category*/
             if(isset($_GET["SearchButton1"])){ 
                 $Search = $_GET["Search"];
-                $sql = "SELECT * FROM posts 
+                $sql = "SELECT * FROM posts /* This will compare the search with datetime, title, category or post. */
                 WHERE datetime LIKE :search 
                 OR title LIKE :search
                 OR category LIKE :search 
@@ -78,12 +82,13 @@
                 $stmt = $ConnectingDB->prepare($sql); //Uses DB connection and prepares sql data
                 $stmt->bindValue(':search','%'.$Search.'%'); //Look for search input field
                 $stmt->execute();
-            }elseif(isset($_GET["page"])){ //Query when Pagination is active i.e Blog.php?page=1
+            }//Query when Pagination is active i.e Blog.php?page=1
+            elseif(isset($_GET["page"])){ 
                 $Page = $_GET["page"];
                 if($Page==0||$Page<1){ // Will display pages from 0 to 4 index when page number is 0 or less
                     $ShowPostFrom=0;
                 }else{
-                $ShowPostFrom=($Page*5)-5;
+                $ShowPostFrom=($Page*5)-5; 
             }
                 $sql = "SELECT * FROM posts ORDER BY id desc LIMIT $ShowPostFrom,5";
                 $stmt = $ConnectingDB->query($sql); //stmt variable
@@ -98,6 +103,8 @@
                 $sql = "SELECT * FROM posts ORDER BY id desc LIMIT 0,3";
                 $stmt = $ConnectingDB->query($sql);
             }
+
+            // Post Display Start
             while ($DataRows = $stmt->fetch()){ //stmt object
                 $PostId            = $DataRows["id"];
                 $DateTime          = $DataRows["datetime"];
@@ -122,13 +129,15 @@
                 </div>
             </div>
             <?php } ?>
+            <!--Post Display End -->
+
             <!--Pagination-->
             <nav class="mt-3">
                 <!-- Creating Forward Button -->
                 <ul class="pagination pagination-lg">
                 <?php
                     if (isset($Page)){
-                        if($Page>1){ //Limits forward Button
+                        if($Page>1){ //Limits Forward Button
                     ?>
                     <li class="page-item">
                         <a href="Blog.php?page=<?php echo $Page-1; ?>" class="page-link">&laquo;</a> <!-- Special Connectors -->
@@ -169,6 +178,7 @@
                     <?php } }?>
                 </ul>
             </nav>
+            <!-- Pagniation END-->
         </div>
         <!--MAIN AREA END -->
 
@@ -248,9 +258,8 @@
         <!--SIDE AREA END -->
     </div>
 </div>
-<!-- HEADER END-->
 <br>
-<!-- FOOTER -->
+<!-- FOOTER START-->
 <footer class="bg-dark text-white">
     <div class="container">
         <div class="row">
@@ -264,6 +273,7 @@
         </div>
     </div>
 </footer>
+<!-- FOOTER END-->
 <div style="height:10px; background:#27aae1;"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

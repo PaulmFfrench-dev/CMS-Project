@@ -1,21 +1,26 @@
+<!-- Requred Files STARTS -->
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
+<!-- Requred Files ENDS -->
 <?php 
-$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"];
-Confirm_Login(); ?>
+$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"]; //Will return the user to this page if they attempted to access it without being logged in first
+Confirm_Login(); //Stops User from accessing page unless username has been by session(unless they have logged in)
+?> 
 <?php 
-if(isset($_POST["Submit"])){
-    $PostTitle = $_POST["PostTitle"];
+if(isset($_POST["Submit"])){ //If submit button is set, than take the information from the form and input it into these varaibles
+    $PostTitle = $_POST["PostTitle"]; 
     $Category = $_POST["Category"];
     $Image = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
     $Target ="Uploads/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
     $PostText = $_POST["PostDescription"];
-    $Admin = $_SESSION["Username"];
-    date_default_timezone_set("Europe/Dublin");
-    $CurrentTime=time();
-    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
+    $Admin = $_SESSION["Username"]; //$Admin is set to the username that has been set by the session, the username that was used to log in with
+    
+    date_default_timezone_set("Europe/Dublin");           //Setting Timezone
+    $CurrentTime=time();                                  //Getting current time from Computer
+    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);//Formating the output
 
+    //Post Validation 
     if(empty($PostTitle)){
         $_SESSION["ErrorMessage"]= "Title is required";
         Redirect_to("AddNewPost.php");
@@ -28,23 +33,24 @@ if(isset($_POST["Submit"])){
     }else{
         //Query to Insert Post in DB when all validation passes
         $ConnectingDB;
-        $sql = "INSERT INTO posts(datetime,title,category,author,image,post)";
-        $sql .= "VALUES(:dateTime,:postTitle,:categoryName,:adminName,:imageName,:postDescription)";
+        $sql = "INSERT INTO posts(datetime,title,category,author,image,post)"; //Specifying the table and the values that will data inserted into them
+        $sql .= "VALUES(:dateTime,:postTitle,:categoryName,:adminName,:imageName,:postDescription)"; //Concatinating these false values onto the $sql variable
         $stmt = $ConnectingDB->prepare($sql);
+        //Binding the false values to their respecitve variables, in which the form data has been stored
         $stmt->bindValue(':dateTime',$DateTime);
         $stmt->bindValue(':postTitle',$PostTitle);
         $stmt->bindValue(':categoryName',$Category);
         $stmt->bindValue(':adminName',$Admin);
         $stmt->bindValue(':imageName',$Image);
         $stmt->bindValue(':postDescription',$PostText);
-        $Execute=$stmt->execute();
-        move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+        $Execute=$stmt->execute(); //Executes the code for mysql
 
-        if($Execute){
-            $_SESSION["SuccessMessage"]="Post with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
+        move_uploaded_file($_FILES["Image"]["tmp_name"],$Target); //Moves uploaded files to the Uploads directory, as has been been specifed by the target variable on line 14
+        if($Execute){ 
+            $_SESSION["SuccessMessage"]="Post with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";  //Show's success message with ID of the post that was last inserted
             Redirect_to("AddNewPost.php");
         }else{
-            $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
+            $_SESSION["ErrorMessage"]="Something went wrong. Try Again!"; 
             Redirect_to("AddNewPost.php");
         }
 
@@ -58,14 +64,15 @@ if(isset($_POST["Submit"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale-1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Categories</title>
+    <title>AddNewPost</title>
+    <!-- Three styles sheets are being used, Bootstrap4.5, fontawesome for icons/text styling and a local style sheet-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://kit.fontawesome.com/772f078b99.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
     <div style="height:10px; background:#27aae1;"></div>
-    <!--Navbar -->
+<!--Navbar START-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a href="#" class="navbar-brand">Paul Ffrench</a>
@@ -93,7 +100,7 @@ if(isset($_POST["Submit"])){
                     <a href="Comments.php" class="nav-link">Comments</a>
                 </li>
                 <li class="nav-item">
-                    <a href="Blog.php" class="nav-link">Live Blog</a>
+                    <a href="Blog.php?page=1" class="nav-link">Live Blog</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -127,6 +134,7 @@ if(isset($_POST["Submit"])){
             echo ErrorMessage();
             echo SuccessMessage();
             ?>
+<!-- Input form START-->
             <form class="" action="AddNewPost.php" method="post" enctype="multipart/form-data">
                 <div class="card bg-secondary text-light mb-3">
                     <div class="card-body bg-dark">
@@ -134,11 +142,12 @@ if(isset($_POST["Submit"])){
                             <label for="title"><span class="FieldInfo">Post Title:</span></label>
                             <input class="form-control" type="text" name="PostTitle" id="title" placeholder="Type Title Here"value="">
                         </div>
+
                         <div class="form-group">
                             <label for="CategoryTitle"><span class="FieldInfo">Choose Category</span></label>
                             <select class="form-control" id="CategoryTitle" name="Category">
                                 <?php 
-                                //Fetching all the categories from category table
+                                //Displays Categories that exist within the category table to choose from, for adding the post too
                                 $ConnectingDB;
                                 $sql = "SELECT * FROM category";
                                 $stmt = $ConnectingDB->query($sql);
@@ -173,12 +182,13 @@ if(isset($_POST["Submit"])){
                     </div>
                 </div>
             </form>
+<!-- Input form END -->
         </div>
     </div>
 </section>
 <!-- MAIN AREA END -->
 
-<!-- FOOTER -->
+<!-- FOOTER START-->
 <footer class="bg-dark text-white">
     <div class="container">
         <div class="row">
@@ -192,6 +202,7 @@ if(isset($_POST["Submit"])){
         </div>
     </div>
 </footer>
+<!-- FOOTER END-->
 <div style="height:10px; background:#27aae1;"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

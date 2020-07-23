@@ -1,21 +1,25 @@
+<!-- Requred Files STARTS -->
 <?php require_once("Include/DB.php"); ?>
 <?php require_once("Include/Functions.php"); ?>
 <?php require_once("Include/Sessions.php"); ?>
+<!-- Requred Files ENDS -->
 <?php 
-$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"];
-Confirm_Login(); ?>
+$_SESSION["TrackingURL"]=$_SERVER["PHP_SELF"]; //Will return the user to this page if they attempted to access it without being logged in first
+Confirm_Login(); //Stops User from accessing page unless username has been by session(unless they have logged in)
+?> 
 <?php 
-if(isset($_POST["Submit"])){
+if(isset($_POST["Submit"])){  //If submit button is set, than take the information from the form and input it into these varaibles
     $UserName        = $_POST["Username"];
     $Name            = $_POST["Name"];
     $Password        = $_POST["Password"];
     $ConfirmPassword = $_POST["ConfirmPassword"];
-    $Admin = $_SESSION["Username"];
+    $Admin = $_SESSION["Username"]; //$Admin is set to the username that has been set by the session, the username that was used to log in with
 
-    date_default_timezone_set("Europe/Dublin");
-    $CurrentTime=time();
-    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
+    date_default_timezone_set("Europe/Dublin"); //Setting Timezone
+    $CurrentTime=time(); //Getting current time from Computer
+    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime); //Formating the output
 
+    //Admin form Validation
     if(empty($UserName)||empty($Password)||empty($ConfirmPassword)){
         $_SESSION["ErrorMessage"]= "All fields must be filled out";
         Redirect_to("Admins.php");
@@ -31,9 +35,10 @@ if(isset($_POST["Submit"])){
     }else{
         //Query to Insert Admin into DB when all validation passes
         $ConnectingDB;
-        $sql = "INSERT INTO admins(datetime,username,password,aname,addedby)";
-        $sql .= "VALUES(:dateTime,:userName,:password,:aName,:adminName)";
+        $sql = "INSERT INTO admins(datetime,username,password,aname,addedby)"; //Specifying the table and the values that will data inserted into them
+        $sql .= "VALUES(:dateTime,:userName,:password,:aName,:adminName)"; //Concatinating these false values onto the $sql variable
         $stmt = $ConnectingDB->prepare($sql);
+        //Binding the false values to their respecitve variables, in which the form data has been stored
         $stmt->bindValue(':dateTime',$DateTime);
         $stmt->bindValue(':userName',$UserName);
         $stmt->bindValue(':password',$Password);
@@ -41,8 +46,8 @@ if(isset($_POST["Submit"])){
         $stmt->bindValue(':adminName',$Admin);
 
         $Execute=$stmt->execute();      
-        if($Execute){
-            $_SESSION["SuccessMessage"]="New Admin with the name of ".$Name." Added Successfully";
+        if($Execute){ 
+            $_SESSION["SuccessMessage"]="New Admin with the name of ".$Name." Added Successfully"; //If success, return this string with Admin name
             Redirect_to("Admins.php");
         }else{
             $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
@@ -66,7 +71,7 @@ if(isset($_POST["Submit"])){
 </head>
 <body>
     <div style="height:10px; background:#27aae1;"></div>
-    <!--Navbar -->
+<!--Navbar START-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
             <a href="#" class="navbar-brand">Paul Ffrench</a>
@@ -94,7 +99,7 @@ if(isset($_POST["Submit"])){
                     <a href="Comments.php" class="nav-link">Comments</a>
                 </li>
                 <li class="nav-item">
-                    <a href="Blog.php" class="nav-link">Live Blog</a>
+                    <a href="Blog.php?page=1" class="nav-link">Live Blog</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -105,8 +110,8 @@ if(isset($_POST["Submit"])){
             </div>
         </div>
     </nav>
-    <div style="height:10px; background:#27aae1;"></div>
 <!-- NAVBAR END-->  
+<div style="height:10px; background:#27aae1;"></div>
  
 <!-- HEADER -->
 <header class="bg-dark text-white">
@@ -128,6 +133,7 @@ if(isset($_POST["Submit"])){
             echo ErrorMessage();
             echo SuccessMessage();
             ?>
+<!-- Input Form START -->
             <form class="" action="Admins.php" method="post">
                 <div class="card bg-secondary text-light mb-3">
                     <div class="card-header">
@@ -164,6 +170,9 @@ if(isset($_POST["Submit"])){
                     </div>
                 </div>
             </form>
+<!-- Input Form END -->
+
+<!-- Display of current admins START-->
             <table class="table table=striped table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -199,14 +208,15 @@ if(isset($_POST["Submit"])){
                     <td> <a href="DeleteAdmin.php?id=<?php echo $AdminId?>" class="btn btn-danger">Delete</a></td>
                 </tr>
             </tbody>
-        <?php } ?>
+        <?php } ?> <!-- Loops Ends -->
         </table>
+<!-- Display of current admins END-->
         </div>
     </div>
 </section>
 <!-- MAIN AREA END -->
 
-<!-- FOOTER -->
+<!-- FOOTER START -->
 <footer class="bg-dark text-white">
     <div class="container">
         <div class="row">
@@ -220,6 +230,8 @@ if(isset($_POST["Submit"])){
         </div>
     </div>
 </footer>
+<!-- FOOTER END -->
+
 <div style="height:10px; background:#27aae1;"></div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

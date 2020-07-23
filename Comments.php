@@ -151,7 +151,7 @@ Confirm_Login();
                 <td><?php echo htmlentities($DateTimeOfComment); ?></td>
                 <td><?php echo htmlentities($CommenterName); ?></td>
                 <td><?php echo htmlentities($CommentContent); ?></td>
-                <td style="min-width:140px;"> <a href="DisApproveComments.php?id=<?php echo $CommentId?>" class="btn btn-warning">Dis-Approve</a></td>
+                <td style="min-width:140px;"> <a href="DisApproveComments.php?id=<?php echo $CommentId?>" class="btn btn-warning">Reject</a></td>
                 <td > <a href="DeleteComments.php?id=<?php echo $CommentId?>" class="btn btn-danger">Delete</a></td>
                 <td style="min-width:140px;"><a class="btn btn-primary" href="FullPost.php?id=<?php echo $CommentPostId; ?>" targer="_blank">Live Preview</a></td>
             </tr>
