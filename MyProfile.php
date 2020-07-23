@@ -25,8 +25,8 @@ if(isset($_POST["Submit"])){
     $Image      = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
     $Target     = "Images/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
 
-    if(strlen($AHeadline)>12){
-        $_SESSION["ErrorMessage"]= "Headline should be less than 12 characters";
+    if(strlen($AHeadline)>30){
+        $_SESSION["ErrorMessage"]= "Headline should be less than 30 characters";
         Redirect_to("MyProfile.php");
     }elseif(strlen($ABio)>500){
         $_SESSION["ErrorMessage"]= "Post Description should be less than 500 characters";
@@ -34,7 +34,7 @@ if(isset($_POST["Submit"])){
     }else{
          //Query to UPDATE Post in DB when all validation passes
          $ConnectingDB;
-         if( !empty($_FILES["Image"]["name"])){
+         if (!empty($_FILES["Image"]["name"])){
          $sql = "UPDATE admins 
                  SET aname='$AName', aheadline='$AHeadline', abio='$ABio', aimage='$Image'
                  WHERE id='$AdminId'";
@@ -99,7 +99,7 @@ if(isset($_POST["Submit"])){
                     <a href="Comments.php" class="nav-link">Comments</a>
                 </li>
                 <li class="nav-item">
-                    <a href="Blog.php" class="nav-link">Live Blog</a>
+                    <a href="Blog.php?page=1" class="nav-link">Live Blog</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -162,7 +162,7 @@ if(isset($_POST["Submit"])){
                         <div class="form-group">
                             <input class="form-control" type="text" id="title" placeholder="Headline" name="Headline" value="">
                             <small class="text-muted">Add a professional headline like, 'Engineer'' at XYZ or 'Architect'</small>
-                            <span class="text-danger">Not more than 12 characters</span>
+                            <span class="text-danger">Not more than 30 characters</span>
                         </div>
                         <div class="form-group">
                             <textarea placeholder="Bio" class="form-control" id="Post" name="Bio" rows="8" cols="80"></textarea>
