@@ -274,3 +274,4 @@ $('#year').text(new Date().getFullYear());
 </script>
 </body>
 </html>
+<?php //require_once("Footer.php"); ?>

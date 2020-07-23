@@ -149,9 +149,7 @@ if(isset($_POST["Submit"])){
                     <small class="text-muted"><a href="Blog.php?category=<?php echo htmlentities($Category); ?>"><?php echo htmlentities($Category); ?></a> & Written by <span class="text-dark"><?php echo htmlentities($Admin); ?></span> On <span class="text-dark"><?php echo htmlentities($DateTime); ?></span></small>
                     <hr>
                     <p class="card-text"> <?php echo $PostDescritpion; ?></p>
-                    <a href="FullPost.php?id=<?php echo $PostId; ?>" style="float:right;">
-                        <span class="btn btn-info">Read More>></span>
-                    </a>
+
                 </div>
             </div>
             <?php } ?>
@@ -320,3 +318,4 @@ $('#year').text(new Date().getFullYear());
 </script>
 </body>
 </html>
+<?php //require_once("Footer.php"); ?>
