@@ -142,7 +142,7 @@ if(isset($_POST["Submit"])){
                     </div>
                 </div>
             </form>
-            <h2>Un-Approved Comments</h2>
+            <h2>Approved Categories</h2>
         <table class="table table=striped table-hover">
             <thead class="thead-dark">
                 <tr>
