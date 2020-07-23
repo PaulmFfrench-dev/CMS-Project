@@ -14,10 +14,10 @@ if(isset($_POST["Submit"])){
     }else{
         $Found_Account=Login_Attempt($UserName,$Password);
         if ($Found_Account){ //If there is content in the found account variable, fetch the following SESSION variables
-            $_SESSION["UserId"]=$Found_Account["id"];
-            $_SESSION["Username"]=$Found_Account["username"];
-            $_SESSION["AdminName"]=$Found_Account["aname"];
-            $_SESSION["SuccessMessage"]="Welcome ".$_SESSION["AdminName"];
+            $_SESSION["UserId"]         =$Found_Account["id"];
+            $_SESSION["Username"]       =$Found_Account["username"];
+            $_SESSION["AdminName"]      =$Found_Account["aname"];
+            $_SESSION["SuccessMessage"] ="Welcome ".$_SESSION["AdminName"];
             if (isset($_SESSION["TrackingURL"])) {
                 Redirect_to($_SESSION["TrackingURL"]);
             }else{
@@ -63,7 +63,6 @@ if(isset($_POST["Submit"])){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                
             </div>
         </div>
     </div>

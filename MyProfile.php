@@ -11,50 +11,47 @@ $ConnectingDB;
 $sql = "SELECT * FROM admins WHERE id='$AdminId'";
 $stmt = $ConnectingDB->query($sql);
 while($DataRows = $stmt->fetch()){
-    $ExistingName = $DataRows['aname'];
+    $ExistingUsername   = $DataRows['username'];
+    $ExistingName       = $DataRows['aname'];
+    $ExistingHeadline   = $DataRows['aheadline'];
+    $ExistingBio        = $DataRows['abio'];
+    $ExistingImage      = $DataRows['aimage'];
 }
 //fetching existing admin data end
 if(isset($_POST["Submit"])){
-    $PostTitle = $_POST["PostTitle"];
-    $Category = $_POST["Category"];
-    $Image = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
-    $Target ="Uploads/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
-    $PostText = $_POST["PostDescription"];
-    $Admin = $_SESSION["Username"];
-    date_default_timezone_set("Europe/Dublin");
-    $CurrentTime=time();
-    $DateTime=strftime("%d-%B-%Y %H:%M:%S",$CurrentTime);
+    $AName      = $_POST["Name"];
+    $AHeadline  = $_POST["Headline"];
+    $ABio       = $_POST["Bio"];
+    $Image      = $_FILES["Image"]["name"]; //The super global _FILES needs to be used with an image because _POST won't. THe image name will be saved in the db but the image will be saved in the directory(Uploads)
+    $Target     = "Images/".basename($_FILES["Image"]["name"]); //Will use basename and take everything within it as an arguement.
 
-    if(empty($PostTitle)){
-        $_SESSION["ErrorMessage"]= "Title is required";
-        Redirect_to("AddNewPost.php");
-    }elseif(strlen($PostTitle)<5){
-        $_SESSION["ErrorMessage"]= "Post title should be greater than 5 characters";
-        Redirect_to("AddNewPost.php");
-    }elseif(strlen($PostText)>9999){
-        $_SESSION["ErrorMessage"]= "Post Description should be less than 10000 characters";
-        Redirect_to("AddNewPost.php");
+    if(strlen($AHeadline)>12){
+        $_SESSION["ErrorMessage"]= "Headline should be less than 12 characters";
+        Redirect_to("MyProfile.php");
+    }elseif(strlen($ABio)>500){
+        $_SESSION["ErrorMessage"]= "Post Description should be less than 500 characters";
+        Redirect_to("MyProfile.php");
     }else{
-        //Query to Insert Post in DB when all validation passes
-        $ConnectingDB;
-        $sql = "INSERT INTO posts(datetime,title,category,author,image,post)";
-        $sql .= "VALUES(:dateTime,:postTitle,:categoryName,:adminName,:imageName,:postDescription)";
-        $stmt = $ConnectingDB->prepare($sql);
-        $stmt->bindValue(':dateTime',$DateTime);
-        $stmt->bindValue(':postTitle',$PostTitle);
-        $stmt->bindValue(':categoryName',$Category);
-        $stmt->bindValue(':adminName',$Admin);
-        $stmt->bindValue(':imageName',$Image);
-        $stmt->bindValue(':postDescription',$PostText);
-        $Execute=$stmt->execute();
-        move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
+         //Query to UPDATE Post in DB when all validation passes
+         $ConnectingDB;
+         if( !empty($_FILES["Image"]["name"])){
+         $sql = "UPDATE admins 
+                 SET aname='$AName', aheadline='$AHeadline', abio='$ABio', aimage='$Image'
+                 WHERE id='$AdminId'";
+         }else{
+         $sql = "UPDATE admins 
+                 SET aname='$AName', aheadline='$AHeadline', abio='$ABio'
+                 WHERE id='$AdminId'";
+         }
+         $Execute = $ConnectingDB->query($sql);
 
+        move_uploaded_file($_FILES["Image"]["tmp_name"],$Target);
         if($Execute){
-            $_SESSION["SuccessMessage"]="Post with id: ".$ConnectingDB->lastInsertId() . "Added Successfully";
-            Redirect_to("AddNewPost.php");
+            $_SESSION["SuccessMessage"]="Details Updated Successfully";
+            Redirect_to("MyProfile.php");
         }else{
             $_SESSION["ErrorMessage"]="Something went wrong. Try Again!";
-            Redirect_to("AddNewPost.php");
+            Redirect_to("MyProfile.php");
         }
 
     }
@@ -84,7 +81,7 @@ if(isset($_POST["Submit"])){
             <div class="collapse navbar-collapse" id="navbarcollapseCMS">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a href="MyProfile.php" class="nav-link"><i class="fas fa-user text-success"></i> My Profile</a>
+                    <a href="MyProfile.php" class="nav-link"><i class="fas fa-user text-success"></i>My Profile</a>
                 </li>
                 <li class="nav-item">
                     <a href="Dashboard.php" class="nav-link">Dashboard</a>
@@ -121,7 +118,8 @@ if(isset($_POST["Submit"])){
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1><i class="fas fa-user mr-2" style="color:#27aae1;"></i>My Profile</h1>
+            <h1><i class="fas fa-user text-success mr-2"></i>@<?php echo $ExistingUsername; ?></h1>
+            <small><?php echo $ExistingHeadline; ?></small>
             </div>
         </div>
     </div>
@@ -138,9 +136,9 @@ if(isset($_POST["Submit"])){
                     <h3><?php echo $ExistingName; ?></h3>
                 </div>
                 <div class="card-body">
-                    <img src="images/avatar.png" class="block img-fluid mb-3" alt="">
+                    <img src="images/<?php echo $ExistingImage; ?>" class="block img-fluid mb-3" alt="">
                     <div class="">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <?php echo $ExistingBio; ?>
                     </div>
                 </div>
             </div>
